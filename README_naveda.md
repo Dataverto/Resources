@@ -1,60 +1,61 @@
-# Naveda — dataset del directo
+Naveda — Dataset
 
-Base de datos **DuckDB** de un DTC de café con suscripción. 12 meses, ~1M de sesiones,
-~31.000 pedidos. Datos **sintéticos**: generados para este directo, no son de ningún cliente real.
+A DuckDB database for a subscription-based coffee DTC business. It contains 12 months of data, approximately 1 million sessions, and around 31,000 orders.
 
-## Qué hay dentro
+The data is synthetic: it was generated specifically for this livestream and does not come from any real client.
 
-| Tabla | Qué es |
-|---|---|
-| `productos` | Catálogo, una fila por SKU |
-| `usuarios` | Usuarios únicos, canal y fecha de alta |
-| `sesiones` | Una fila por visita (canal, dispositivo, usuario) |
-| `eventos` | Embudo: `product_view → add_to_cart → checkout_start → payment_attempt → purchase` |
-| `pedidos` | Una fila por pedido (ingresos, descuento, segmento, canal) |
-| `lineas_pedido` | Líneas de pedido (producto, unidades, precio) |
-| `marketing` | Inversión diaria en paid por canal |
+What’s inside
 
-## Uso rápido
+Table	Description
+productos	Product catalog, one row per SKU
+usuarios	Unique users, acquisition channel, and signup date
+sesiones	One row per visit, including channel, device, and user
+eventos	Funnel events: product_view → add_to_cart → checkout_start → payment_attempt → purchase
+pedidos	One row per order, including revenue, discount, segment, and channel
+lineas_pedido	Order lines, including product, quantity, and price
+marketing	Daily paid media spend by channel
 
-DuckDB no necesita servidor. Un solo fichero, se abre desde cualquier sitio.
+Quick start
 
-**Desde la terminal:**
-```bash
-# instala la CLI de duckdb (https://duckdb.org/docs/installation) y:
+DuckDB does not require a server. It is a single file that can be opened from anywhere.
+
+From the terminal:
+
+# Install the DuckDB CLI:
+# https://duckdb.org/docs/installation
 duckdb naveda.duckdb
 D SELECT count(*) FROM pedidos;
 D SELECT canal, count(*) FROM sesiones GROUP BY 1 ORDER BY 2 DESC;
-```
 
-**Desde Python:**
-```python
+From Python:
+
 import duckdb
 con = duckdb.connect("naveda.duckdb", read_only=True)
-con.sql("SELECT tipo_evento, count(*) FROM eventos GROUP BY 1").show()
-```
+con.sql("""
+    SELECT tipo_evento, count(*)
+    FROM eventos
+    GROUP BY 1
+""").show()
 
-**Con Claude Code:** apunta tu repo a este fichero y pregúntale en lenguaje natural.
+With Claude Code: point your repository to this file and ask questions in natural language.
 
-## Si prefieres montarlo tú
+Build it yourself
 
-El `.duckdb` es sólo un empaquetado de unos CSV. Si quieres reproducirlo desde cero
-(o cambiar algo), tienes el generador:
+The .duckdb file is simply a packaged version of several CSV files. To reproduce it from scratch or modify the dataset, use the generator:
 
-```bash
 pip install duckdb pandas numpy
-python generar_naveda.py        # crea naveda.duckdb directamente
-```
+python generar_naveda.py        # Creates naveda.duckdb directly
 
-La semilla está fija, así que sale idéntico cada vez. Si ya tienes los CSV y sólo quieres
-el `.duckdb`:
+The random seed is fixed, so the output is identical every time.
 
-```bash
-python montar_duckdb.py         # CSV -> naveda.duckdb
-```
+If you already have the CSV files and only want to create the .duckdb file:
 
-## Un aviso honesto
+python montar_duckdb.py         # CSV → naveda.duckdb
 
-Los datos tienen **ruido a propósito** (algún nulo, algún duplicado, algún timestamp
-imposible) y **tres hallazgos escondidos**. No te digo cuáles: la gracia es encontrarlos
-y, sobre todo, validar que lo que te devuelva tu herramienta es correcto.
+An honest warning
+
+The data contains intentional noise, including a few null values, duplicate records, and impossible timestamps.
+
+It also contains three hidden findings.
+
+I will not tell you what they are. The point is to discover them and, above all, validate that the output produced by your tool is actually correct.
