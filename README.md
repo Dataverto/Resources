@@ -1,38 +1,40 @@
 # Naveda Dataset
 
-Dataset de ejemplo en formato **DuckDB** utilizado en el vídeo:
+A sample **DuckDB** database used in the video:
 
-> **Claude Code + tus datos: guía práctica de Agentic Analytics**
+> **Claude Code + Your Data: A Practical Guide to Agentic Analytics**
 
-El objetivo de esta base de datos es practicar análisis de datos con Claude Code utilizando un caso realista de negocio.
+This dataset is designed to help you explore how AI agents can investigate real business problems using SQL, iterative reasoning, and data validation.
 
-## Contenido
+## Contents
 
 ```
 naveda.duckdb
 ```
 
-La base de datos contiene un escenario ficticio de un eCommerce preparado para investigar preguntas como:
+The database contains a fictional eCommerce scenario that can be used to investigate questions such as:
 
-- ¿Por qué han caído las ventas?
-- ¿Qué canal está provocando el problema?
-- ¿Es un problema de marketing?
-- ¿Es un fallo del proceso de compra?
-- ¿Qué hipótesis pueden validarse con los datos?
+- Why did sales drop?
+- Which channel caused the decline?
+- Is marketing responsible?
+- Is there a checkout issue?
+- Which hypotheses are actually supported by the data?
 
 ---
 
-# Requisitos
+# Requirements
 
-No necesitas instalar PostgreSQL, MySQL ni ningún otro servidor.
+No PostgreSQL, MySQL, or database server is required.
 
-Únicamente necesitas **DuckDB**.
+All you need is **DuckDB**.
 
 ## DuckDB CLI
 
+Install DuckDB from:
+
 https://duckdb.org/docs/installation/
 
-Una vez instalado:
+Then open the database:
 
 ```bash
 duckdb naveda.duckdb
@@ -40,13 +42,13 @@ duckdb naveda.duckdb
 
 ## Python
 
-Instala únicamente:
+Install DuckDB:
 
 ```bash
 pip install duckdb
 ```
 
-Conexión:
+Example:
 
 ```python
 import duckdb
@@ -58,59 +60,58 @@ con.sql("SHOW TABLES")
 
 ---
 
-# Uso con Claude Code
+# Using with Claude Code
 
-Una vez abierto el proyecto desde Claude Code puedes comenzar con un prompt como este:
+Once you've opened the project in Claude Code, you can start with a prompt like:
 
+```text
+Analyze the structure of naveda.duckdb.
+
+Show me:
+
+- all tables
+- columns
+- relationships
+- the main business metrics available
+
+Do not draw any business conclusions yet.
 ```
-Analiza la estructura de naveda.duckdb.
 
-Muéstrame:
+Then move on to business questions:
 
-- tablas
-- columnas
-- relaciones
-- principales métricas disponibles
+```text
+Sales have dropped compared to last month.
 
-No saques conclusiones todavía.
-```
+Investigate what happened.
 
-Después puedes hacer preguntas de negocio:
+Do not accept the first hypothesis.
 
-```
-Las ventas han caído respecto al mes anterior.
-
-Investiga qué ha ocurrido.
-
-No aceptes la primera hipótesis.
-
-Valida cada conclusión mediante consultas SQL y explícame el razonamiento paso a paso.
+Validate every conclusion using SQL queries and explain your reasoning step by step.
 ```
 
 ---
 
-# Objetivo
+# Purpose
 
-Este dataset está diseñado para practicar **Agentic Analytics**, es decir, utilizar IA para investigar problemas de negocio mediante un proceso iterativo de:
+This dataset is intended for practicing **Agentic Analytics**—using AI agents to investigate business problems through an iterative workflow:
 
-- formular hipótesis
-- consultar datos
-- validar resultados
-- descartar explicaciones incorrectas
-- llegar a una conclusión fundamentada
+- formulate hypotheses
+- query the data
+- validate findings
+- reject incorrect explanations
+- reach evidence-based conclusions
 
-No pretende mostrar únicamente cómo generar SQL, sino cómo construir un flujo de análisis similar al que seguiría un analista de datos.
-
----
-
-# Vídeo
-
-📺 Claude Code + tus datos: guía práctica
-
-*(Añadir enlace cuando esté publicado.)*
+The goal is not simply to generate SQL, but to demonstrate how an AI agent can reason through a real analytical investigation.
 
 ---
 
-# Licencia
+# Video
 
-Este dataset se proporciona únicamente con fines educativos y de demostración.
+📺 **Claude Code + Your Data: A Practical Guide to Agentic Analytics**
+https://youtu.be/tn3o8coPsC8
+
+---
+
+# License
+
+This dataset is provided for educational and demonstration purposes only.
